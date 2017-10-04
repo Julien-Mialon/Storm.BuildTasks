@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<UsingTask AssemblyFile="..\..\colors\Storm.BuildTasks.AndroidColors.dll"
+			   TaskName="Storm.BuildTasks.AndroidColors.AndroidColorsTask" />
+
+	<Target Name="ColorsTask" BeforeTargets="BeforeBuild">
+		<!--Execute resw transformation-->
+		<AndroidColorsTask InputFiles="@(ColorFile)">
+			<Output TaskParameter="OutputResourceFiles" ItemName="StormOutputResourceFiles" />
+		</LocalizationPCLTask>
+	</Target>
+</Project>
