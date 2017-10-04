@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storm.BuildTasks.AndroidColors", "src\Storm.BuildTasks.AndroidColors\Storm.BuildTasks.AndroidColors.csproj", "{D3C6E3EF-A7D4-4D71-9B6D-E121A9245F35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storm.BuildTasks.Common", "src\Storm.BuildTasks.Common\Storm.BuildTasks.Common.csproj", "{575DF389-D6D4-4A24-B848-8A45218A4848}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storm.BuildTasks.AndroidColors.UnitTests", "tests\Storm.BuildTasks.AndroidColors.UnitTests\Storm.BuildTasks.AndroidColors.UnitTests.csproj", "{593D3808-C99B-49C3-A4B3-D5C268E150EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{D3C6E3EF-A7D4-4D71-9B6D-E121A9245F35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3C6E3EF-A7D4-4D71-9B6D-E121A9245F35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3C6E3EF-A7D4-4D71-9B6D-E121A9245F35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{575DF389-D6D4-4A24-B848-8A45218A4848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{575DF389-D6D4-4A24-B848-8A45218A4848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{575DF389-D6D4-4A24-B848-8A45218A4848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{575DF389-D6D4-4A24-B848-8A45218A4848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{593D3808-C99B-49C3-A4B3-D5C268E150EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{593D3808-C99B-49C3-A4B3-D5C268E150EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{593D3808-C99B-49C3-A4B3-D5C268E150EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{593D3808-C99B-49C3-A4B3-D5C268E150EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
