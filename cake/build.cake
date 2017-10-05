@@ -1,4 +1,6 @@
-#l "../src/scripts/bootstrapper.csx"
+#l "nuget:?package=Cake.Storm.Fluent"
+#l "nuget:?package=Cake.Storm.Fluent.DotNetCore"
+#l "nuget:?package=Cake.Storm.Fluent.NuGet"
 
 Configure()
 	.UseRootDirectory("..")
