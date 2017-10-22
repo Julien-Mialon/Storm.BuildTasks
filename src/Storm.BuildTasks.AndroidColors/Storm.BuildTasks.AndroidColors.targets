@@ -4,9 +4,9 @@
 			   TaskName="Storm.BuildTasks.AndroidColors.AndroidColorsTask" />
 
 	<Target Name="ColorsTask" BeforeTargets="BeforeBuild">
-		<!--Execute resw transformation-->
+		<!--Execute c# file to colors.xml transformation-->
 		<AndroidColorsTask InputFiles="@(ColorFile)">
 			<Output TaskParameter="OutputResourceFiles" ItemName="StormOutputResourceFiles" />
-		</LocalizationPCLTask>
+		</AndroidColorsTask>
 	</Target>
 </Project>

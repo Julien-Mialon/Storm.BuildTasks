@@ -13,15 +13,5 @@
 		<releaseNotes>{release_notes}</releaseNotes>
 		<copyright>Copyright 2017</copyright>
 		<tags>xamarin msbuild android color</tags>
-		<dependencies>
-			<group>
-				<dependency id="Microsoft.Build" version="15.3.409" />
-				<dependency id="Microsoft.Build.Engine" version="15.3.409" />
-				<dependency id="Microsoft.Build.Framework" version="15.3.409" />
-				<dependency id="Microsoft.Build.Tasks.Core" version="15.3.409" />
-				<dependency id="Microsoft.Build.Utilities.Core" version="15.3.409" />
-				<dependency id="Microsoft.CodeAnalysis.CSharp" version="2.3.2" />
-			</group>
-		</dependencies>
 	</metadata>
 </package>

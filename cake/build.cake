@@ -28,12 +28,19 @@ Configure()
     //applications configuration
 	.AddApplication("android-colors", configuration => configuration
         .WithProject("src/Storm.BuildTasks.AndroidColors/Storm.BuildTasks.AndroidColors.csproj")
-        .WithVersion("0.1.0")
+        .WithVersion("0.1.1")
         .UseNugetPack(nugetConfiguration => nugetConfiguration
             .WithNuspec("misc/nuspecs/Storm.BuildTasks.AndroidColors.nuspec")
             .WithPackageId("Storm.BuildTasks.AndroidColors")
             .WithReleaseNotesFile("misc/release_notes/Storm.BuildTasks.AndroidColors.md")
-            .AddFileFromArtifacts("net46/Storm.BuildTasks.AndroidColors.dll", "build")
+            .AddFileFromArtifacts("net46/Storm.BuildTasks.AndroidColors.dll", "colors")
+            //dependencies
+            .AddFile("src/Storm.BuildTasks.AndroidColors/bin/Release/net46/Storm.BuildTasks.Common.dll", "colors")
+            .AddFile("src/Storm.BuildTasks.AndroidColors/bin/Release/net46/Microsoft.CodeAnalysis.CSharp.dll", "colors")
+            .AddFile("src/Storm.BuildTasks.AndroidColors/bin/Release/net46/Microsoft.CodeAnalysis.dll", "colors")
+            //props & target file
+            .AddFile("src/Storm.BuildTasks.AndroidColors/Storm.BuildTasks.AndroidColors.props", "build/monoandroid")
+            .AddFile("src/Storm.BuildTasks.AndroidColors/Storm.BuildTasks.AndroidColors.targets", "build/monoandroid")
         )
     )
 	.Build();
