@@ -8,7 +8,7 @@ Here is the list of tasks available :
 
 ## Storm.BuildTasks.AndroidColors [![nuget](https://img.shields.io/nuget/v/Storm.BuildTasks.AndroidColors.svg)](https://www.nuget.org/packages/Storm.BuildTasks.AndroidColors)
 
-Available on [nuget](https://www.nuget.org/packages/Storm.BuildTasks.AndroidColors) or with nuget Package Manager `Install-Package Storm.CrossLocalization`
+Available on [nuget](https://www.nuget.org/packages/Storm.BuildTasks.AndroidColors) or with nuget Package Manager `Install-Package Storm.BuildTasks.AndroidColors`
 
 This nuget package add a build tasks before compilation of your project to turn C# file with int variable into colors.xml file format for Xamarin.Android. 
 
