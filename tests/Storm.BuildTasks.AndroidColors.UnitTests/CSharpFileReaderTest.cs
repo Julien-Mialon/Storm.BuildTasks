@@ -18,6 +18,8 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 
 		public const int Red = 0xFF0000;
 		public const int Blue = 0x0000FF;
+
+public const int PseudoWhite=White;
 	}
 }";
 			
@@ -29,7 +31,8 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				.ContainsPair("Black", "#000000").And
 				.ContainsPair("Red", "#FF0000").And
 				.ContainsPair("Blue", "#0000FF").And
-				.HasSize(4);
+			     .ContainsPair("PseudoWhite","@color/White").And
+				.HasSize(5);
 		}
 	}
 }
