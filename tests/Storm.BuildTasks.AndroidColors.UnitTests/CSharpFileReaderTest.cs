@@ -19,7 +19,7 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 		public const int Red = 0xFF0000;
 		public const int Blue = 0x0000FF;
 
-public const int PseudoWhite=White;
+		public const int PseudoWhite = White;
 	}
 }";
 			

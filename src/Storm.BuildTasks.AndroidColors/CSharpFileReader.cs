@@ -53,7 +53,12 @@ namespace Storm.BuildTasks.AndroidColors
 										keyList.Add(name);
 										return new Entry(name, $"#{colorCode:X6}");
 									}
-									else if (keyList.Contains(value))
+								}
+								else if (declaration.Initializer.Value is IdentifierNameSyntax identifier)
+								{
+									string value = identifier.Identifier.ValueText;
+
+									if (keyList.Contains(value))
 									{
 										keyList.Add(name);
 										return new Entry(name, $"@color/{value}");
