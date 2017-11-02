@@ -1,4 +1,5 @@
 using NFluent;
+using Storm.BuildTasks.AndroidColors.Entries;
 using Xunit;
 
 namespace Storm.BuildTasks.AndroidColors.UnitTests
@@ -24,14 +25,14 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 
 			CSharpFileReader reader = new CSharpFileReader();
 
-			Check.ThatCode(() => reader.Read(input))
-				.WhichResult()
-				.ContainsPair("White", "#FFFFFF").And
-				.ContainsPair("Black", "#000000").And
-				.ContainsPair("Red", "#FF0000").And
-				.ContainsPair("Green", "#00FF00").And
-				.ContainsPair("Blue", "#0000FF").And
-				.HasSize(5);
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(5);
+			Check.That(readerResult.Entries).ContainsExactly(
+				new ColorEntry("White", 0xFFFFFF),
+				new ColorEntry("Black", 0x000000),
+				new ColorEntry("Red", 0xFF0000),
+				new ColorEntry("Green", 0x00FF00),
+				new ColorEntry("Blue", 0x0000FF));
 		}
 
 		[Fact]
@@ -47,16 +48,15 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 		public const uint NearZeroAlphaBlue = 0x080000FF;
 	}
 }";
-
 			CSharpFileReader reader = new CSharpFileReader();
 
-			Check.ThatCode(() => reader.Read(input))
-				.WhichResult()
-				.ContainsPair("Blue", "#FF0000FF").And
-				.ContainsPair("AlphaBlue", "#800000FF").And
-				.ContainsPair("LightAlphaBlue", "#400000FF").And
-				.ContainsPair("NearZeroAlphaBlue", "#080000FF").And
-				.HasSize(4);
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(4);
+			Check.That(readerResult.Entries).ContainsExactly(
+				new ColorWithAlphaEntry("Blue", 0xFF0000FF),
+				new ColorWithAlphaEntry("AlphaBlue", 0x800000FF),
+				new ColorWithAlphaEntry("LightAlphaBlue", 0x400000FF),
+				new ColorWithAlphaEntry("NearZeroAlphaBlue", 0x080000FF));
 		}
 
 		[Fact]
@@ -72,10 +72,10 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 
 			CSharpFileReader reader = new CSharpFileReader();
 
-			Check.ThatCode(() => reader.Read(input))
-				.WhichResult()
-				.ContainsPair("WithoutAlphaRed", "#FF0000").And
-				.HasSize(1);
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(1);
+			Check.That(readerResult.Entries).ContainsExactly(
+				new ColorEntry("WithoutAlphaRed", 0xFF0000));
 		}
 
 		[Fact]
@@ -92,11 +92,32 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 
 			CSharpFileReader reader = new CSharpFileReader();
 
-			Check.ThatCode(() => reader.Read(input))
-				.WhichResult()
-				.ContainsPair("White", "#FFFFFF").And
-				.ContainsPair("OtherWhite", "@color/White").And
-				.HasSize(2);
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(2);
+			Check.That(readerResult.Entries).ContainsExactly<IEntry>(
+				new ColorEntry("White", 0xFFFFFF),
+				new VariableNameEntry("OtherWhite", "White"));
+		}
+
+		[Fact]
+		public void TestVariableNamesUnordered()
+		{
+			string input = @"namespace X
+{
+	public static class Colors
+	{
+		public const int OtherWhite = White;
+		public const int White = 0xFFFFFF;
+	}
+}";
+
+			CSharpFileReader reader = new CSharpFileReader();
+
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(2);
+			Check.That(readerResult.Entries).ContainsExactly<IEntry>(
+				new VariableNameEntry("OtherWhite", "White"),
+				new ColorEntry("White", 0xFFFFFF));
 		}
 	}
 }
