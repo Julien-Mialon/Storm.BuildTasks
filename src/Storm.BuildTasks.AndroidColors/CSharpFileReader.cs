@@ -20,7 +20,7 @@ namespace Storm.BuildTasks.AndroidColors
 				.OfType<FieldDeclarationSyntax>()
 				.Where(x =>
 				{
-					if (x.Declaration.Type is PredefinedTypeSyntax type && type.Keyword.ValueText == "int")
+					if (x.Declaration.Type is PredefinedTypeSyntax type && (type.Keyword.ValueText == "int" || type.Keyword.ValueText == "uint" || type.Keyword.ValueText == "long"))
 					{
 						return true;
 					}
@@ -35,10 +35,14 @@ namespace Storm.BuildTasks.AndroidColors
 					if (declaration.Initializer.Value is LiteralExpressionSyntax literalValue)
 					{
 						string value = literalValue.Token.ValueText;
-						if (int.TryParse(value, out int colorCode))
+						if (uint.TryParse(value, out uint colorWithAlpha))
 						{
 							keyList.Add(name);
-							return new Entry(name, colorCode);
+							if (colorWithAlpha > 0xFFFFFF)
+							{
+								return new AlphaEntry(name, colorWithAlpha);
+							}
+							return new Entry(name, (int)colorWithAlpha); //int cast is safe since value must be lower than 0xFFFFFF
 						}
 					}
 					else if (declaration.Initializer.Value is IdentifierNameSyntax identifier)
