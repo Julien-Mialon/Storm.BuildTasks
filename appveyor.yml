@@ -16,4 +16,3 @@ test:
   assemblies:
     only:
       - tests\**\*.UnitTests.dll
-test: off
