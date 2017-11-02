@@ -10,22 +10,11 @@ namespace Storm.BuildTasks.AndroidColors
 {
 	public class CSharpFileReader
 	{
-		private class Entry
-		{
-			public Entry(string name, int color)
-			{
-				Name = name;
-				Color = color;
-			}
-
-			public string Name { get; }
-
-			public int Color { get; }
-		}
-
 		public Dictionary<string, string> Read(string content)
 		{
 			SyntaxNode rootNode = CSharpSyntaxTree.ParseText(content).GetRoot();
+
+			var keyList = new List<string>();
 
 			return rootNode.DescendantNodes()
 				.OfType<FieldDeclarationSyntax>()
@@ -37,7 +26,8 @@ namespace Storm.BuildTasks.AndroidColors
 					}
 
 					return false;
-				}).Select(x =>
+				})
+				.Select<FieldDeclarationSyntax, IEntry>(x =>
 				{
 					var declaration = x.Declaration.Variables.First();
 
@@ -47,13 +37,25 @@ namespace Storm.BuildTasks.AndroidColors
 						string value = literalValue.Token.ValueText;
 						if (int.TryParse(value, out int colorCode))
 						{
+							keyList.Add(name);
 							return new Entry(name, colorCode);
+						}
+					}
+					else if (declaration.Initializer.Value is IdentifierNameSyntax identifier)
+					{
+						string value = identifier.Identifier.ValueText;
+
+						if (keyList.Contains(value))
+						{
+							keyList.Add(name);
+							return new LinkEntry(name, value);
 						}
 					}
 
 					return null;
-				}).Where(x => x != null)
-				.ToDictionary(x => x.Name, x => $"#{x.Color:X6}");
+				})
+				.Where(x => x != null)
+				.ToDictionary(x => x.Name, x => x.ToAndroidColor());
 		}
 	}
 }
