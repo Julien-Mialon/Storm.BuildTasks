@@ -20,7 +20,7 @@ namespace Storm.BuildTasks.AndroidColors
 				.OfType<FieldDeclarationSyntax>()
 				.Where(x =>
 				{
-					if (x.Declaration.Type is PredefinedTypeSyntax type && type.Keyword.ValueText == "int")
+					if (x.Declaration.Type is PredefinedTypeSyntax type && (type.Keyword.ValueText == "int" || type.Keyword.ValueText = "uint")
 					{
 						return true;
 					}
@@ -39,6 +39,11 @@ namespace Storm.BuildTasks.AndroidColors
 						{
 							keyList.Add(name);
 							return new Entry(name, colorCode);
+						}
+						else if (int.TryParse(value, out uint colorCode))
+						{
+							keyList.Add(name);
+							return new AlphaEntry(name, colorCode);
 						}
 					}
 					else if (declaration.Initializer.Value is IdentifierNameSyntax identifier)
