@@ -24,6 +24,24 @@
 		}
 	}
 
+	public class AlphaEntry : IEntry
+	{
+		public AlphaEntry(string name, uint color)
+		{
+			Name = name;
+			Color = color;
+		}
+
+		public string Name { get; }
+
+		public uint Color { get; }
+
+		public string ToAndroidColor()
+		{
+			return $"#{Color:X8}";
+		}
+	}
+
 	public class LinkEntry : IEntry
 	{
 		public string Name { get; }
