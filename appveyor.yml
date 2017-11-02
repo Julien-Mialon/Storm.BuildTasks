@@ -12,4 +12,7 @@ build:
   project: Storm.BuildTasks.sln
   parallel: true
   verbosity: minimal
-test: off
+test:
+  assemblies:
+    only:
+      - tests\**\*.UnitTests.dll
