@@ -60,6 +60,30 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 		}
 
 		[Fact]
+		public void TestUintValuesWithZeroAlpha()
+		{
+			string input = @"namespace X
+{
+	public static class Colors
+	{
+		public const uint TransparentWhite = 0x00FFFFFF;
+		public const uint TransparentRed = 0x00FF0000;
+		public const uint TransparentGreen = 0x0000FF00;
+		public const uint TransparentBlue = 0x000000FF;
+	}
+}";
+			CSharpFileReader reader = new CSharpFileReader();
+
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(4);
+			Check.That(readerResult.Entries).ContainsExactly(
+				new ColorWithAlphaEntry("TransparentWhite", 0x00FFFFFF),
+				new ColorWithAlphaEntry("TransparentRed", 0x00FF0000),
+				new ColorWithAlphaEntry("TransparentGreen", 0x0000FF00),
+				new ColorWithAlphaEntry("TransparentBlue", 0x000000FF));
+		}
+
+		[Fact]
 		public void TestUintValuesWithoutAlpha()
 		{
 			string input = @"namespace X

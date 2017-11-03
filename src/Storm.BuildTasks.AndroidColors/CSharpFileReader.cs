@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -27,17 +28,36 @@ namespace Storm.BuildTasks.AndroidColors
 					string name = declaration.Identifier.ValueText;
 					if (declaration.Initializer.Value is LiteralExpressionSyntax literalValue)
 					{
-						string value = literalValue.Token.ValueText;
-						if (uint.TryParse(value, out uint colorWithAlpha))
+						string text = literalValue.Token.Text;
+						if (text.StartsWith("0x"))
 						{
-							nameDependenciesSatisfied[name] = true;
-							if (colorWithAlpha > 0xFFFFFF)
+							text = text.Substring(2);
+							if (uint.TryParse(text, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint colorValue))
 							{
-								resultEntries.Add(new ColorWithAlphaEntry(name, colorWithAlpha));
+								if (text.Length == 8)
+								{
+									resultEntries.Add(new ColorWithAlphaEntry(name, colorValue));
+								}
+								else if (text.Length == 6)
+								{
+									resultEntries.Add(new ColorEntry(name, (int) colorValue));
+								}
 							}
-							else
+						}
+						else
+						{
+							string value = literalValue.Token.ValueText;
+							if (uint.TryParse(value, out uint colorValue))
 							{
-								resultEntries.Add(new ColorEntry(name, (int) colorWithAlpha)); //int cast is safe since value must be lower than 0xFFFFFF
+								nameDependenciesSatisfied[name] = true;
+								if (colorValue > 0xFFFFFF)
+								{
+									resultEntries.Add(new ColorWithAlphaEntry(name, colorValue));
+								}
+								else
+								{
+									resultEntries.Add(new ColorEntry(name, (int) colorValue)); //int cast is safe since value must be lower than 0xFFFFFF
+								}
 							}
 						}
 					}
