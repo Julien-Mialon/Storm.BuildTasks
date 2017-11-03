@@ -67,9 +67,10 @@ namespace Storm.BuildTasks.AndroidColors
 			    return true;
 		    }
 
-		    while (true)
+			int initialCount;
+		    do
 		    {
-			    int initialCount = variableEntries.Count;
+			    initialCount = variableEntries.Count;
 
 			    for (int i = 0; i < variableEntries.Count; ++i)
 			    {
@@ -86,11 +87,7 @@ namespace Storm.BuildTasks.AndroidColors
 				    return true;
 			    }
 
-			    if (initialCount == variableEntries.Count)
-			    {
-				    break;
-			    }
-		    }
+		    } while(initialCount != variableEntries.Count);
 
 		    if (variableEntries.Count > 0)
 		    {
@@ -109,22 +106,15 @@ namespace Storm.BuildTasks.AndroidColors
 	    public static bool ValidateUniqueNames(List<InputFile> files, Action<string> logError)
 	    {
 			HashSet<string> names = new HashSet<string>();
-			HashSet<string> duplicatedNames = new HashSet<string>();
+			List<string> duplicatedNames = new List<string>();
 
 			foreach (InputFile file in files)
 			{
 				foreach (IEntry entry in file.Content.Entries)
 				{
-					if (names.Contains(entry.Name))
+					if(!names.Add(entry.Name))
 					{
-						if (!duplicatedNames.Contains(entry.Name))
-						{
-							duplicatedNames.Add(entry.Name);
-						}
-					}
-					else
-					{
-						names.Add(entry.Name);
+						duplicatedNames.Add(entry.Name);
 					}
 				}
 			}
