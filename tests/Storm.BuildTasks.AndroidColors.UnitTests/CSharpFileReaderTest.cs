@@ -143,5 +143,58 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new VariableNameEntry("OtherWhite", "White"),
 				new ColorEntry("White", 0xFFFFFF));
 		}
+
+		[Fact]
+		public void Test3DigitsValues()
+		{
+			string input = @"namespace X
+{
+	public static class Colors
+	{
+		public const int White = 0xFFF;
+
+		public const int Black = 0x000;
+
+		public const int Red = 0xF00;
+		public const int Green = 0x0F0;
+		public const int Blue = 0x00F;
+	}
+}";
+
+			CSharpFileReader reader = new CSharpFileReader();
+
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(5);
+			Check.That(readerResult.Entries).ContainsExactly(
+				new ColorEntry("White", 0xFFFFFF),
+				new ColorEntry("Black", 0x000000),
+				new ColorEntry("Red", 0xFF0000),
+				new ColorEntry("Green", 0x00FF00),
+				new ColorEntry("Blue", 0x0000FF));
+		}
+
+		[Fact]
+		public void Test3DigitsComplexValues()
+		{
+			string input = @"namespace X
+{
+	public static class Colors
+	{
+		public const int FirstGray = 0x888;
+		public const int SecondGray = 0xBBB;
+
+		public const int ThirdGray = 0xABC;
+	}
+}";
+
+			CSharpFileReader reader = new CSharpFileReader();
+
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(3);
+			Check.That(readerResult.Entries).ContainsExactly(
+				new ColorEntry("FirstGray", 0x888888),
+				new ColorEntry("SecondGray", 0xBBBBBB),
+				new ColorEntry("ThirdGray", 0xAABBCC));
+		}
 	}
 }
