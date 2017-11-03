@@ -10,6 +10,6 @@ namespace Storm.BuildTasks.AndroidColors
 
 		public string Directory { get; set; }
 
-		public Dictionary<string, string> Content { get; set; }
+		public FileReaderResult Content { get; set; }
 	}
 }
