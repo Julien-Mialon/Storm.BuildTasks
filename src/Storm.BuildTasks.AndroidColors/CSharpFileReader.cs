@@ -42,6 +42,18 @@ namespace Storm.BuildTasks.AndroidColors
 								{
 									resultEntries.Add(new ColorEntry(name, (int) colorValue));
 								}
+								else if (text.Length == 3)
+								{
+									int r = (int) (colorValue & 0xF00) >> 8;
+									r = r << 4 | r;
+									int g = (int) (colorValue & 0x0F0) >> 4;
+									g = g << 4 | g;
+									int b = (int) (colorValue & 0x00F);
+									b = b << 4 | b;
+
+									int expandedColorValue = r << 16 | g << 8 | b;
+									resultEntries.Add(new ColorEntry(name, expandedColorValue));
+								}
 							}
 						}
 						else
