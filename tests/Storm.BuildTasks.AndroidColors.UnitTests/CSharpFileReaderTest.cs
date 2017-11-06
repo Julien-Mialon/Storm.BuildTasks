@@ -33,6 +33,14 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new ColorEntry("Red", 0xFF0000),
 				new ColorEntry("Green", 0x00FF00),
 				new ColorEntry("Blue", 0x0000FF));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("White", true).And
+				.ContainsPair("Black", true).And
+				.ContainsPair("Red", true).And
+				.ContainsPair("Green", true).And
+				.ContainsPair("Blue", true).And
+				.HasSize(5);
 		}
 
 		[Fact]
@@ -57,6 +65,13 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new ColorWithAlphaEntry("AlphaBlue", 0x800000FF),
 				new ColorWithAlphaEntry("LightAlphaBlue", 0x400000FF),
 				new ColorWithAlphaEntry("NearZeroAlphaBlue", 0x080000FF));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("Blue", true).And
+				.ContainsPair("AlphaBlue", true).And
+				.ContainsPair("LightAlphaBlue", true).And
+				.ContainsPair("NearZeroAlphaBlue", true).And
+				.HasSize(4);
 		}
 
 		[Fact]
@@ -81,6 +96,13 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new ColorWithAlphaEntry("TransparentRed", 0x00FF0000),
 				new ColorWithAlphaEntry("TransparentGreen", 0x0000FF00),
 				new ColorWithAlphaEntry("TransparentBlue", 0x000000FF));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("TransparentWhite", true).And
+				.ContainsPair("TransparentRed", true).And
+				.ContainsPair("TransparentGreen", true).And
+				.ContainsPair("TransparentBlue", true).And
+				.HasSize(4);
 		}
 
 		[Fact]
@@ -100,6 +122,10 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 			Check.That(readerResult.Entries).HasSize(1);
 			Check.That(readerResult.Entries).ContainsExactly(
 				new ColorEntry("WithoutAlphaRed", 0xFF0000));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("WithoutAlphaRed", true).And
+				.HasSize(1);
 		}
 
 		[Fact]
@@ -121,6 +147,10 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 			Check.That(readerResult.Entries).ContainsExactly<IEntry>(
 				new ColorEntry("White", 0xFFFFFF),
 				new VariableNameEntry("OtherWhite", "White"));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("White", true).And
+				.HasSize(1);
 		}
 
 		[Fact]
@@ -142,6 +172,10 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 			Check.That(readerResult.Entries).ContainsExactly<IEntry>(
 				new VariableNameEntry("OtherWhite", "White"),
 				new ColorEntry("White", 0xFFFFFF));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("White", true).And
+				.HasSize(1);
 		}
 
 		[Fact]
@@ -171,6 +205,14 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new ColorEntry("Red", 0xFF0000),
 				new ColorEntry("Green", 0x00FF00),
 				new ColorEntry("Blue", 0x0000FF));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("White", true).And
+				.ContainsPair("Black", true).And
+				.ContainsPair("Red", true).And
+				.ContainsPair("Green", true).And
+				.ContainsPair("Blue", true).And
+				.HasSize(5);
 		}
 
 		[Fact]
@@ -195,6 +237,12 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new ColorEntry("FirstGray", 0x888888),
 				new ColorEntry("SecondGray", 0xBBBBBB),
 				new ColorEntry("ThirdGray", 0xAABBCC));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("FirstGray", true).And
+				.ContainsPair("SecondGray", true).And
+				.ContainsPair("ThirdGray", true).And
+				.HasSize(3);
 		}
 
 		[Fact]
@@ -230,6 +278,15 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new VariableNameEntry("ThemeGradientTopStart", "RoyalPurple"),
 				new VariableNameEntry("ThemeGradientBottomEnd", "TransparentWhite"),
 				new VariableNameEntry("TabBarSelector", "Gray4A"));
+
+			Check.That(readerResult.Dependencies)
+				.ContainsPair("White", true).And
+				.ContainsPair("TransparentWhite", true).And
+				.ContainsPair("Black", true).And
+				.ContainsPair("RoyalPurple", true).And
+				.ContainsPair("Gray4A", true).And
+				.HasSize(5);
+
 
 		}
 	}

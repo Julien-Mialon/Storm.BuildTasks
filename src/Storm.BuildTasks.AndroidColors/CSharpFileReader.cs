@@ -36,10 +36,12 @@ namespace Storm.BuildTasks.AndroidColors
 							{
 								if (text.Length == 8)
 								{
+									nameDependenciesSatisfied[name] = true;
 									resultEntries.Add(new ColorWithAlphaEntry(name, colorValue));
 								}
 								else if (text.Length == 6)
 								{
+									nameDependenciesSatisfied[name] = true;
 									resultEntries.Add(new ColorEntry(name, (int) colorValue));
 								}
 								else if (text.Length == 3)
@@ -52,6 +54,8 @@ namespace Storm.BuildTasks.AndroidColors
 									b = b << 4 | b;
 
 									int expandedColorValue = r << 16 | g << 8 | b;
+
+									nameDependenciesSatisfied[name] = true;
 									resultEntries.Add(new ColorEntry(name, expandedColorValue));
 								}
 							}
@@ -61,13 +65,14 @@ namespace Storm.BuildTasks.AndroidColors
 							string value = literalValue.Token.ValueText;
 							if (uint.TryParse(value, out uint colorValue))
 							{
-								nameDependenciesSatisfied[name] = true;
 								if (colorValue > 0xFFFFFF)
 								{
+									nameDependenciesSatisfied[name] = true;
 									resultEntries.Add(new ColorWithAlphaEntry(name, colorValue));
 								}
 								else
 								{
+									nameDependenciesSatisfied[name] = true;
 									resultEntries.Add(new ColorEntry(name, (int) colorValue)); //int cast is safe since value must be lower than 0xFFFFFF
 								}
 							}
