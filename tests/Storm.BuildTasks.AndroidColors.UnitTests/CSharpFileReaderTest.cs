@@ -196,5 +196,41 @@ namespace Storm.BuildTasks.AndroidColors.UnitTests
 				new ColorEntry("SecondGray", 0xBBBBBB),
 				new ColorEntry("ThirdGray", 0xAABBCC));
 		}
+
+		[Fact]
+		public void TestColorCombinations()
+		{
+			string input = @"namespace X
+{
+	public static class CustomColors
+	{
+		private const int White = 0xFFFFFF;
+		private const uint TransparentWhite = 0x00FFFFFF;
+		private const int Black = 0x000000;
+		private const int RoyalPurple = 0X643D9B;
+		private const int Gray4A = 0X4A4A4A;
+
+		public const int ThemeGradientTopStart  = RoyalPurple;
+		public const int ThemeGradientBottomEnd = TransparentWhite;
+		
+		public const int TabBarSelector		=   Gray4A;
+	}
+}";
+
+			CSharpFileReader reader = new CSharpFileReader();
+
+			var readerResult = reader.Read(input);
+			Check.That(readerResult.Entries).HasSize(8);
+			Check.That(readerResult.Entries).ContainsExactly<IEntry>(
+				new ColorEntry("White", 0xFFFFFF),
+				new ColorWithAlphaEntry("TransparentWhite", 0x00FFFFFF),
+				new ColorEntry("Black", 0x000000),
+				new ColorEntry("RoyalPurple", 0x643D9B),
+				new ColorEntry("Gray4A", 0x4A4A4A),
+				new VariableNameEntry("ThemeGradientTopStart", "RoyalPurple"),
+				new VariableNameEntry("ThemeGradientBottomEnd", "TransparentWhite"),
+				new VariableNameEntry("TabBarSelector", "Gray4A"));
+
+		}
 	}
 }
