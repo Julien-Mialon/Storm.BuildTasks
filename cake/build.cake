@@ -28,7 +28,7 @@ Configure()
     //applications configuration
 	.AddApplication("android-colors", configuration => configuration
         .WithProject("src/Storm.BuildTasks.AndroidColors/Storm.BuildTasks.AndroidColors.csproj")
-        .WithVersion("0.2.1")
+        .WithVersion("0.2.2")
         .UseNugetPack(nugetConfiguration => nugetConfiguration
             .WithNuspec("misc/nuspecs/Storm.BuildTasks.AndroidColors.nuspec")
             .WithPackageId("Storm.BuildTasks.AndroidColors")
