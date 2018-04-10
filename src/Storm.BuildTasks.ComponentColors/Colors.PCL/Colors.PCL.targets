@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <UsingTask AssemblyFile="..\..\colors\Colors.PCL.dll"
+               TaskName="Colors.PCL.ComponentColorsPCLTask" />
+
+    <Target Name="ComponentColorsPCLTask" BeforeTargets="BeforeBuild">
+        <!--Execute resw transformation-->
+        <LocalizationPCLTask InputFiles="@(ComponentColorFile)"
+                             OverrideFiles="@(ComponentColorOverrideFile)"
+                             DefaultNamespace="$(RootNamespace)"
+        >
+            <Output TaskParameter="OutputCompileFiles" ItemName="StormOutputCompileFiles" />
+            <Output TaskParameter="OutputResourceFiles" ItemName="StormOutputResourceFiles" />
+        </LocalizationPCLTask>
+    </Target>
+</Project>

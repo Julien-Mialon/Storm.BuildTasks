@@ -29,6 +29,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -38,6 +39,10 @@
     <None Include="Colors.Android.targets" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Storm.BuildTasks.Common\Storm.BuildTasks.Common.csproj">
+      <Project>{A3080B0D-F617-4948-BD98-EAAED7721849}</Project>
+      <Name>Storm.BuildTasks.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Colors.Core\Colors.Core.csproj">
       <Project>{4f5c5289-2948-4030-bb7c-9e03aa256205}</Project>
       <Name>Colors.Core</Name>
