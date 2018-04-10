@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.Android", "Colors.Android\Colors.Android.csproj", "{858751DE-AFFF-40CD-AAF3-5A565E8D8556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.Core", "Colors.Core\Colors.Core.csproj", "{4F5C5289-2948-4030-BB7C-9E03AA256205}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.iOS", "Colors.iOS\Colors.iOS.csproj", "{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{858751DE-AFFF-40CD-AAF3-5A565E8D8556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{858751DE-AFFF-40CD-AAF3-5A565E8D8556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{858751DE-AFFF-40CD-AAF3-5A565E8D8556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{858751DE-AFFF-40CD-AAF3-5A565E8D8556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F5C5289-2948-4030-BB7C-9E03AA256205}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5C5289-2948-4030-BB7C-9E03AA256205}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5C5289-2948-4030-BB7C-9E03AA256205}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5C5289-2948-4030-BB7C-9E03AA256205}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
