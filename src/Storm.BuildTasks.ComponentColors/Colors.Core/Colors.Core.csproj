@@ -32,19 +32,23 @@
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorConstants.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="JsonFileReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseTask.cs" />
     <Compile Include="ColorFile.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Storm.BuildTasks.Common\Storm.BuildTasks.Common.csproj">
-      <Project>{a3080b0d-f617-4948-bd98-eaaed7721849}</Project>
-      <Name>Storm.BuildTasks.Common</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

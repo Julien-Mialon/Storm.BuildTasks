@@ -6,8 +6,6 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Runtime.Remoting.Messaging;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Storm.BuildTasks.Common.Extensions;
-using Storm.BuildTasks.Common.Reader;
 
 namespace Colors.Core
 {
@@ -219,6 +217,7 @@ namespace Colors.Core
 				if (privateContent.TryGetValue(reference.Value, out var color))
 				{
 					content.Add(reference.Key, color);
+					keys.Add(reference.Key);
 				}
 				else
 				{

@@ -2,7 +2,7 @@
 <Project
         xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <UsingTask
-            AssemblyFile="..\colors\Colors.Android.dll"
+            AssemblyFile="..\..\colors\Colors.Android.dll"
             TaskName="Colors.Android.ComponentColorsAndroidTask"/>
     <Target
             Name="ComponentColorsTask"

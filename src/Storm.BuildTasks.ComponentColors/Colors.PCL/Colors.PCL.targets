@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <UsingTask AssemblyFile="..\colors\Colors.PCL.dll"
+    <UsingTask AssemblyFile="..\..\colors\Colors.PCL.dll"
                TaskName="Colors.PCL.ComponentColorsPCLTask"/>
 
     <Target Name="ComponentColorsPCLTask" BeforeTargets="BeforeBuild">

@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\..\..\..\..\..\..\Library\Frameworks\Mono.framework\Versions\5.8.1\lib\mono\4.6.1-api\Microsoft.Build.Utilities.v4.0.dll</HintPath>
     </Reference>
@@ -45,10 +46,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Storm.BuildTasks.Common\Storm.BuildTasks.Common.csproj">
-      <Project>{a3080b0d-f617-4948-bd98-eaaed7721849}</Project>
-      <Name>Storm.BuildTasks.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Colors.Core\Colors.Core.csproj">
       <Project>{4f5c5289-2948-4030-bb7c-9e03aa256205}</Project>
       <Name>Colors.Core</Name>

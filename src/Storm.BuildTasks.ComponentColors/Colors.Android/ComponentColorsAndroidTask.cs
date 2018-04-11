@@ -5,7 +5,6 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using Colors.Core;
-using Storm.BuildTasks.Common.Extensions;
 
 namespace Colors.Android
 {
@@ -49,6 +48,8 @@ namespace Colors.Android
 
 		protected virtual void GenerateColorService(List<string> keys)
 		{
+			Log.LogMessage($"Generate Color Service {keys.Count}");
+
 			CodeCompileUnit codeUnit = new CodeCompileUnit();
 
 			// add namespace
@@ -88,7 +89,7 @@ namespace Colors.Android
 			var method = new CodeMemberMethod
 			{
 				Name = ColorConstants.SERVICE_METHOD_NAME,
-				ReturnType = new CodeTypeReference("Color"),
+				ReturnType = new CodeTypeReference(typeof(uint)),
 				Attributes = MemberAttributes.Public
 			};
 			method.Parameters.Add(new CodeParameterDeclarationExpression(ColorConstants.ENUM_NAME, "key"));
@@ -109,7 +110,7 @@ namespace Colors.Android
 						new CodePropertyReferenceExpression(new CodeVariableReferenceExpression(ColorConstants.ENUM_NAME), key)
 					),
 					new CodeMethodReturnStatement(
-						new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key)))
+						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key))), "ToArgb"))
 					)
 				);
 

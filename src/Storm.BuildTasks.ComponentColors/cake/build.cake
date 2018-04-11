@@ -10,12 +10,11 @@ const string DEPLOYMENT_TOOLS_DIRECTORY = DEPLOYMENT_DIRECTORY + "/colors";
 const string DEPLOYMENT_BUILD_DIRECTORY = DEPLOYMENT_DIRECTORY + "/build";
 
 const string PCL_TFM = "netstandard1.0";
-const string WINPHONE_TFM = "win;wp;wp8;wp81;wpa81;uap";
 const string ANDROID_TFM = "monoandroid";
 const string IOS_TFM = "monotouch;xamarinios";
 
 const string NUGET_NAME = "Storm.BuildTasks.ComponentColors";
-const string NUGET_VERSION = "1.0.0";
+const string NUGET_VERSION = "1.0.7";
 const string NUGET_AUTHOR = "Valentin Jubert, Julien Mialon";
 
 /* constants for target names */
@@ -40,7 +39,6 @@ Tuple<string, string>[] TFMForProjects = new []
 	Tuple.Create("Colors.PCL", PCL_TFM),
 	Tuple.Create("Colors.Android", ANDROID_TFM),
 	Tuple.Create("Colors.iOS", IOS_TFM),
-	Tuple.Create("Colors.WindowsPhone", WINPHONE_TFM)
 };
 
 var target = Argument("target", DEFAULT_TARGET);
@@ -103,11 +101,11 @@ Task(RELEASE)
 			OutputDirectory = ARTIFACTS_DIRECTORY
 		});
 		
-		NuGetPush(ARTIFACTS_DIRECTORY + "/" + NUGET_NAME + "." + NUGET_VERSION + ".nupkg", new NuGetPushSettings
+		/*NuGetPush(ARTIFACTS_DIRECTORY + "/" + NUGET_NAME + "." + NUGET_VERSION + ".nupkg", new NuGetPushSettings
 		{
 			Source = "https://www.nuget.org/api/v2/package",
 			ApiKey = EnvironmentVariable("NUGET_API_KEY") ?? ""
-		});
+		});*/
 	});
 
 /* Restore tasks */

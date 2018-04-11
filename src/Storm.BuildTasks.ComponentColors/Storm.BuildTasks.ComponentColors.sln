@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.Android", "Colors.Android\Colors.Android.csproj", "{858751DE-AFFF-40CD-AAF3-5A565E8D8556}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.Core", "Colors.Core\Colors.Core.csproj", "{4F5C5289-2948-4030-BB7C-9E03AA256205}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.iOS", "Colors.iOS\Colors.iOS.csproj", "{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storm.BuildTasks.Common", "..\Storm.BuildTasks.Common\Storm.BuildTasks.Common.csproj", "{A3080B0D-F617-4948-BD98-EAAED7721849}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.PCL", "Colors.PCL\Colors.PCL.csproj", "{CA01AA80-54B5-4740-9895-71E78E756D5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Core", "Sample.Core\Sample.Core.csproj", "{495C189C-096F-43CE-8806-8FC2A65D1C40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,13 +31,16 @@ Global
 		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5ABA2AD-A964-4167-AEC0-8E40B7479D61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3080B0D-F617-4948-BD98-EAAED7721849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3080B0D-F617-4948-BD98-EAAED7721849}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3080B0D-F617-4948-BD98-EAAED7721849}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3080B0D-F617-4948-BD98-EAAED7721849}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal
