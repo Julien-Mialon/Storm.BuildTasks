@@ -35,6 +35,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Colors.iOS.props" />
     <Content Include="Colors.iOS.targets" />
   </ItemGroup>
   <ItemGroup>
