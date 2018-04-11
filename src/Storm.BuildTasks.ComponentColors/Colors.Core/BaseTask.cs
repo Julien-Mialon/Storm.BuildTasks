@@ -145,110 +145,96 @@ namespace Colors.Core
 					overrideFile = new List<ColorFile>();
 				}
 
-				Dictionary<string, uint> strings = GenerateColors(item.Key, item.Value, overrideFile, keySet);
-				GenerateForDirectory(item.Key, strings);
+				var colors = GenerateColors(item.Key, item.Value, overrideFile, keySet);
+				GenerateForDirectory(item.Key, colors);
 			}
 
 			List<string> keys = keySet.ToList();
 			GenerateForProject(keys);
 		}
 
-		protected virtual Dictionary<string, uint> GenerateColors(string directory, List<ColorFile> inputFiles, List<ColorFile> overrideFiles, HashSet<string> keys)
+		protected virtual Dictionary<string, string> GenerateColors(string directory, List<ColorFile> inputFiles, List<ColorFile> overrideFiles, HashSet<string> keys)
 		{
-			var content = new Dictionary<string, uint>();
-			var platformSpecificContent = new Dictionary<string, uint>();
+			var privateContent = new Dictionary<string, string>();
+			var referenceContent = new Dictionary<string, string>();
+
+			var content = new Dictionary<string, string>();
 
 			foreach (var file in inputFiles)
 			{
-				foreach (var item in file.Content)
+				foreach (var keyValue in file.Content)
 				{
-					if (item.Key.IsPlatformSpecificString())
+					var key = keyValue.Key;
+					var colorString = keyValue.Value;
+					if (colorString.StartsWith("#"))
 					{
-						string simplifiedKey = item.Key.SimplifyKey();
-						if (IsCurrentPlatformKey(item.Key))
+						if (!privateContent.TryAdd(key, colorString))
 						{
-							if (!platformSpecificContent.TryAdd(simplifiedKey, ProcessValue(item.Value)) && !CanHaveDuplicatedKeys)
-							{
-								Log.LogError($"Duplicated key (key: {item.Key}, file: {file.AbsoluteFilePath})");
-							}
+							Log.LogError($"Can't have duplicated key {key}, file {file.AbsoluteFilePath}");
 						}
-
-						keys.Add(simplifiedKey);
 					}
 					else
 					{
-						if (!content.TryAdd(item.Key, ProcessValue(item.Value)) && !CanHaveDuplicatedKeys)
+						if (!referenceContent.TryAdd(key, colorString))
 						{
-							Log.LogError($"Duplicated key (key: {item.Key}, file: {file.AbsoluteFilePath})");
+							Log.LogError($"Can't have duplicated key {key}, file {file.AbsoluteFilePath}");
 						}
-
-						keys.Add(item.Key);
 					}
 				}
 			}
 
 			foreach (var file in overrideFiles)
 			{
-				foreach (var item in file.Content)
+				foreach (var keyValue in file.Content)
 				{
-					if (item.Key.IsPlatformSpecificString())
+					var key = keyValue.Key;
+					var colorString = keyValue.Value;
+					if (colorString.StartsWith("#"))
 					{
-						string simplifiedKey = item.Key.SimplifyKey();
-						if (keys.Add(simplifiedKey))
+						if (privateContent.ContainsKey(key))
 						{
-							Log.LogError($"Can not add new key using override file (key: {item.Key}, file: {file.AbsoluteFilePath})");
+							privateContent[key] = colorString;
 						}
-
-						if (IsCurrentPlatformKey(item.Key))
+						else
 						{
-							platformSpecificContent[simplifiedKey] = ProcessValue(item.Value);
+							Log.LogError($"Can't find original key for override {key}, file {file.AbsoluteFilePath}");
 						}
 					}
 					else
 					{
-						if (keys.Add(item.Key))
+						if (referenceContent.ContainsKey(key))
 						{
-							Log.LogError($"Can not add new key using override file (key: {item.Key}, file: {file.AbsoluteFilePath})");
+							referenceContent[key] = colorString;
 						}
-
-						content[item.Key] = ProcessValue(item.Value);
+						else
+						{
+							Log.LogError($"Can't find original key for override {key}, file {file.AbsoluteFilePath}");
+						}
 					}
 				}
 			}
 
-			foreach (var item in platformSpecificContent)
+			foreach (var reference in referenceContent)
 			{
-				string key = item.Key;
-				if (content.ContainsKey(key))
+				if (privateContent.TryGetValue(reference.Value, out var color))
 				{
-					content[key] = item.Value;
+					content.Add(reference.Key, color);
 				}
 				else
 				{
-					content.Add(key, item.Value);
+					Log.LogError($"Can't find color for reference {reference.Key}");
 				}
 			}
 
 			return content;
 		}
 
-		protected virtual void GenerateForDirectory(string directory, Dictionary<string, uint> keyValues) { }
+		protected virtual void GenerateForDirectory(string directory, Dictionary<string, string> keyValues) { }
 
 		protected virtual void GenerateForProject(List<string> keys) { }
 
 		protected virtual void AfterGeneration() { }
 
 		protected virtual void SetOutputVariables() { }
-
-		protected virtual uint ProcessValue(string value)
-		{
-			//TODO 
-//			uint.Parse(value);
-			return 0;
-		}
-
-		protected virtual bool IsCurrentPlatformKey(string key) => false;
-
-		protected virtual bool CanHaveDuplicatedKeys => false;
 	}
 }

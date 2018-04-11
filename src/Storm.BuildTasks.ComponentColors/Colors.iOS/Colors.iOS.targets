@@ -1,16 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <UsingTask AssemblyFile="..\..\colors\Colors.iOS.iOS.dll"
-               TaskName="Colors.iOS.ComponentColorsIOSTask" />
+               TaskName="Colors.iOS.ComponentColorsIOSTask"/>
 
     <Target Name="ComponentColorsTask" BeforeTargets="PrepareForBuild">
-        <!--Execute resw transformation-->
-        <LocalizationIOSTask InputFiles="@(ComponentColorFile)"
-                             OverrideFiles="@(ComponentColorOverrideFile)"
-                             DefaultNamespace="$(RootNamespace)"
+        <ComponentColorsIOSTask InputFiles="@(ComponentColorFile)"
+                                OverrideFiles="@(ComponentColorOverrideFile)"
+                                DefaultNamespace="$(RootNamespace)"
         >
-            <Output TaskParameter="OutputCompileFiles" ItemName="StormOutputCompileFiles" />
-            <Output TaskParameter="OutputResourceFiles" ItemName="StormOutputResourceFiles" />
-        </LocalizationIOSTask>
+            <Output TaskParameter="OutputCompileFiles" ItemName="StormOutputCompileFiles"/>
+            <Output TaskParameter="OutputResourceFiles" ItemName="StormOutputResourceFiles"/>
+        </ComponentColorsIOSTask>
     </Target>
 </Project>

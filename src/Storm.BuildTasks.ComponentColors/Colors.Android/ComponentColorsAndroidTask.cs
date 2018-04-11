@@ -11,7 +11,7 @@ namespace Colors.Android
 {
 	public class ComponentColorsAndroidTask : BaseTask
 	{
-		protected override void GenerateForDirectory(string directory, Dictionary<string, uint> keyValues)
+		protected override void GenerateForDirectory(string directory, Dictionary<string, string> keyValues)
 		{
 			//write colors.xml file
 			XmlDocument document = new XmlDocument();
@@ -23,7 +23,7 @@ namespace Colors.Android
 			foreach (var pair in keyValues)
 			{
 				XmlNode elementNode = document.CreateElement("color");
-				elementNode.InnerText = $"#{pair.Value:X}";
+				elementNode.InnerText = pair.Value;
 
 				XmlAttribute attributeName = document.CreateAttribute("name");
 				attributeName.Value = pair.Key;
@@ -46,8 +46,6 @@ namespace Colors.Android
 
 			base.GenerateForProject(keys);
 		}
-
-		protected override bool IsCurrentPlatformKey(string key) => key.IsAndroidString();
 
 		protected virtual void GenerateColorService(List<string> keys)
 		{
