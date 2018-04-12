@@ -48,8 +48,6 @@ namespace Colors.Android
 
 		protected virtual void GenerateColorService(List<string> keys)
 		{
-			Log.LogMessage($"Generate Color Service {keys.Count}");
-
 			CodeCompileUnit codeUnit = new CodeCompileUnit();
 
 			// add namespace

@@ -19,7 +19,6 @@ namespace Colors.PCL
 
 		protected virtual void GenerateEnumColors(List<string> keys)
 		{
-			Log.LogMessage($"Generate EnumColors {keys.Count.ToString()}");
 			var codeUnit = new CodeCompileUnit();
 
 			//ajout namespace

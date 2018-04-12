@@ -13,7 +13,7 @@
 		public const string CONTEXT_PARAMETER_NAME = "ctx";
 
 		//file
-		public const string FILE_SUFFIX = ".cs";
+		public const string FILE_SUFFIX = ".ComponentColor.cs";
 
 		public const string ENUM_FILE_PATH = ENUM_NAME + FILE_SUFFIX;
 		public const string INTERFACE_SERVICE_FILE_PATH = INTERFACE_SERVICE_NAME + FILE_SUFFIX;

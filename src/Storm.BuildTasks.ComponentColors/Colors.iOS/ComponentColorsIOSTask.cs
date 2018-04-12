@@ -25,8 +25,6 @@ namespace Colors.iOS
 
 		protected virtual void GenerateColorService(Dictionary<string, string> keyValues)
 		{
-			Log.LogMessage($"Generate ColorService {keyValues.Count}");
-
 			var codeUnit = new CodeCompileUnit();
 
 			//add namespace
@@ -76,7 +74,6 @@ namespace Colors.iOS
 
 		private uint ProcessValue(string value)
 		{
-			Log.LogMessage($"Process {value}");
 			if (uint.TryParse(value.Replace("#", string.Empty), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var color))
 			{
 				return color;
@@ -90,8 +87,6 @@ namespace Colors.iOS
 
 		protected virtual void GenerateColors(List<string> keys)
 		{
-			Log.LogMessage($"Generate Colors {keys.Count}");
-
 			var codeUnit = new CodeCompileUnit();
 			// for class declaration
 			var codeNamespace = new CodeNamespace(GenerationNamespace);
