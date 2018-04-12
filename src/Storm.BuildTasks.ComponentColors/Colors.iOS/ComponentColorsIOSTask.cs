@@ -109,10 +109,9 @@ namespace Colors.iOS
 			};
 			classDeclaration.Members.Add(constructor);
 
-			//static initialize method
-			const string fieldName = "_service";
 
 			//field
+			const string fieldName = "_service";
 			var field = new CodeMemberField($"Func<{ColorConstants.INTERFACE_SERVICE_NAME}>", fieldName)
 			{
 				Attributes = MemberAttributes.Private | MemberAttributes.Static
@@ -129,8 +128,8 @@ namespace Colors.iOS
 			initializeMethod.Statements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), fieldName), new CodeVariableReferenceExpression("service")));
 			classDeclaration.Members.Add(initializeMethod);
 
-			var contextReference = new CodeMethodInvokeExpression(new CodeMethodReferenceExpression(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), fieldName), "Invoke"));
-			var getStringMethod = new CodeMethodReferenceExpression(contextReference, ColorConstants.SERVICE_METHOD_NAME);
+			var serviceReference = new CodeMethodInvokeExpression(new CodeMethodReferenceExpression(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), fieldName), "Invoke"));
+			var getColorMethod = new CodeMethodReferenceExpression(serviceReference, ColorConstants.SERVICE_METHOD_NAME);
 			foreach (var key in keys)
 			{
 				var property = new CodeMemberProperty
@@ -141,7 +140,7 @@ namespace Colors.iOS
 				};
 
 				property.GetStatements.Add(new CodeMethodReturnStatement(
-					new CodeMethodInvokeExpression(getStringMethod, new CodePropertyReferenceExpression(new CodeVariableReferenceExpression(ColorConstants.ENUM_NAME), key))
+					new CodeMethodInvokeExpression(getColorMethod, new CodePropertyReferenceExpression(new CodeVariableReferenceExpression(ColorConstants.ENUM_NAME), key))
 				));
 				classDeclaration.Members.Add(property);
 			}

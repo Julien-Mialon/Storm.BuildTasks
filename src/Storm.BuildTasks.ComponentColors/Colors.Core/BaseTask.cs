@@ -183,6 +183,8 @@ namespace Colors.Core
 
 			foreach (var file in overrideFiles)
 			{
+				Log.LogMessage($"Override file {file.AbsoluteFilePath}");
+
 				foreach (var keyValue in file.Content)
 				{
 					var key = keyValue.Key;
@@ -192,6 +194,7 @@ namespace Colors.Core
 						if (privateContent.ContainsKey(key))
 						{
 							privateContent[key] = colorString;
+							Log.LogMessage($"Override {colorString}");
 						}
 						else
 						{
@@ -203,6 +206,7 @@ namespace Colors.Core
 						if (referenceContent.ContainsKey(key))
 						{
 							referenceContent[key] = colorString;
+							Log.LogMessage($"Override {colorString}");
 						}
 						else
 						{
