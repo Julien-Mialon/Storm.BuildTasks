@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.iOS", "Colors.iOS\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Colors.PCL", "Colors.PCL\Colors.PCL.csproj", "{CA01AA80-54B5-4740-9895-71E78E756D5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Core", "Sample.Core\Sample.Core.csproj", "{495C189C-096F-43CE-8806-8FC2A65D1C40}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA01AA80-54B5-4740-9895-71E78E756D5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{495C189C-096F-43CE-8806-8FC2A65D1C40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
