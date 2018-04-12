@@ -2,6 +2,6 @@
     <!-- Define newly available build action -->
     <ItemGroup>
         <AvailableItemName Include="ComponentColorFile"/>
-        <AvailableItemName Include="OverrideComponentColorFile"/>
+        <AvailableItemName Include="ComponentColorOverrideFile"/>
     </ItemGroup>
 </Project>
