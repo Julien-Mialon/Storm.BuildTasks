@@ -168,7 +168,9 @@ namespace Colors.Android
 			var contextReference = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), ColorConstants.CONTEXT_FIELD_NAME);
 			var getColorMethod = new CodeMethodReferenceExpression(contextReference, "GetColor");
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
-
+			
+			//todo see if int return by context return a uint value
+			
 			//properties
 			foreach (string key in keys)
 			{

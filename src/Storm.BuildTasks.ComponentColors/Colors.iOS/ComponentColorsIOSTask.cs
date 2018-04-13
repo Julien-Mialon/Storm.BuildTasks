@@ -74,6 +74,11 @@ namespace Colors.iOS
 
 		private uint ProcessValue(string value)
 		{
+			if (value.StartsWith("#") && value.Length <= 7)
+			{
+				value = value.Insert(1, "FF");
+			}
+
 			if (uint.TryParse(value.Replace("#", string.Empty), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var color))
 			{
 				return color;
@@ -87,6 +92,7 @@ namespace Colors.iOS
 
 		protected virtual void GenerateColors(List<string> keys)
 		{
+			//TODO MAKE RETURN UICOLOR
 			var codeUnit = new CodeCompileUnit();
 			// for class declaration
 			var codeNamespace = new CodeNamespace(GenerationNamespace);
@@ -108,7 +114,6 @@ namespace Colors.iOS
 				Attributes = MemberAttributes.Private
 			};
 			classDeclaration.Members.Add(constructor);
-
 
 			//field
 			const string fieldName = "_service";
