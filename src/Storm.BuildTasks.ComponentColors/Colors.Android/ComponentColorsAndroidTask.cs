@@ -40,7 +40,7 @@ namespace Colors.Android
 
 		protected override void GenerateForProject(List<string> keys)
 		{
-			GenerateColorService(keys);
+//			GenerateColorService(keys);
 			GenerateColors(keys);
 
 			base.GenerateForProject(keys);
@@ -137,7 +137,7 @@ namespace Colors.Android
 			var classDeclaration = new CodeTypeDeclaration(ColorConstants.COLORS_NAME)
 			{
 				IsClass = true,
-				TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed,
+				TypeAttributes = TypeAttributes.NestedAssembly | TypeAttributes.Sealed,
 			};
 			codeNamespace.Types.Add(classDeclaration);
 
@@ -168,9 +168,9 @@ namespace Colors.Android
 			var contextReference = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), ColorConstants.CONTEXT_FIELD_NAME);
 			var getColorMethod = new CodeMethodReferenceExpression(contextReference, "GetColor");
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
-			
+
 			//todo see if int return by context return a uint value
-			
+
 			//properties
 			foreach (string key in keys)
 			{
