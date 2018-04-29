@@ -96,6 +96,7 @@ namespace Colors.Android
 			var methodParam = new CodeVariableReferenceExpression("key");
 			var contextReference = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), ColorConstants.CONTEXT_FIELD_NAME);
 			var getColor = new CodeMethodReferenceExpression(contextReference, "GetColor");
+			var getTheme=new CodePropertyReferenceExpression(contextReference,"Theme");
 
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
 
@@ -108,7 +109,7 @@ namespace Colors.Android
 						new CodePropertyReferenceExpression(new CodeVariableReferenceExpression(ColorConstants.ENUM_NAME), key)
 					),
 					new CodeMethodReturnStatement(
-						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key))), "ToArgb"))
+						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key), getTheme)), "ToArgb"))
 					)
 				);
 
