@@ -57,6 +57,7 @@ namespace Colors.Android
 			codeNamespace.Imports.Add(new CodeNamespaceImport(DefaultNamespace));
 			codeNamespace.Imports.Add(new CodeNamespaceImport("Android.Content"));
 			codeNamespace.Imports.Add(new CodeNamespaceImport("Android.Graphics"));
+			codeNamespace.Imports.Add(new CodeNamespaceImport("Android.OS"));
 
 			// create class
 			var classDeclaration = new CodeTypeDeclaration(ColorConstants.IMPLEMENTATION_SERVICE_NAME)
@@ -83,22 +84,45 @@ namespace Colors.Android
 			constructor.Statements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), ColorConstants.CONTEXT_FIELD_NAME), new CodeVariableReferenceExpression(ColorConstants.CONTEXT_PARAMETER_NAME)));
 			classDeclaration.Members.Add(constructor);
 
+			//wrapped method
+			var wrappedMethod = new CodeMemberMethod
+			{
+				Name = "GetWrappedColor",
+				ReturnType = new CodeTypeReference(typeof(int)),
+				Attributes = MemberAttributes.Private
+			};
+			wrappedMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(int), "colorId"));
+			classDeclaration.Members.Add(wrappedMethod);
+
+			var contextReference = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), ColorConstants.CONTEXT_FIELD_NAME);
+			var getColorApi23 = new CodeMethodReferenceExpression(contextReference, "GetColor");
+			var resourcesReference = new CodeFieldReferenceExpression(contextReference, "Resources");
+			var getColor = new CodeMethodReferenceExpression(resourcesReference, "GetColor");
+			var paramRef = new CodeVariableReferenceExpression("colorId");
+			var trueReturn = new CodeMethodReturnStatement(new CodeMethodInvokeExpression(getColorApi23, paramRef));
+			var falseReturn = new CodeMethodReturnStatement(new CodeMethodInvokeExpression(new CodeMethodInvokeExpression(getColor, paramRef), "ToArgb"));
+			var buildRef = new CodeTypeReferenceExpression("Build");
+			var versionRef = new CodePropertyReferenceExpression(buildRef, "VERSION");
+			var sdkIntRef = new CodePropertyReferenceExpression(versionRef, "SdkInt");
+			var buildVersionRef = new CodeTypeReferenceExpression("BuildVersionCodes");
+			var mRef = new CodePropertyReferenceExpression(buildVersionRef, "M");
+			var comparison = new CodeBinaryOperatorExpression(sdkIntRef, CodeBinaryOperatorType.GreaterThanOrEqual, mRef);
+			var conditionnalReturn = new CodeConditionStatement(comparison, new[] { trueReturn }, new[] { falseReturn });
+			wrappedMethod.Statements.Add(conditionnalReturn);
+
+			var wrappedMethodReference = new CodeMethodReferenceExpression(new CodeThisReferenceExpression(), "GetWrappedColor");
+
 			//methode
 			var method = new CodeMemberMethod
 			{
 				Name = ColorConstants.SERVICE_METHOD_NAME,
 				ReturnType = new CodeTypeReference(typeof(uint)),
-				Attributes = MemberAttributes.Public
+				Attributes = MemberAttributes.Public | MemberAttributes.Final
 			};
 			method.Parameters.Add(new CodeParameterDeclarationExpression(ColorConstants.ENUM_NAME, "key"));
 			classDeclaration.Members.Add(method);
 
 			var methodParam = new CodeVariableReferenceExpression("key");
-			var contextReference = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), ColorConstants.CONTEXT_FIELD_NAME);
-			var resourcesProperty = new CodePropertyReferenceExpression(contextReference, "Resources");
-			var getColor = new CodeMethodReferenceExpression(resourcesProperty, "GetColor");
-			var getTheme = new CodePropertyReferenceExpression(contextReference, "Theme");
-
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
 
 			foreach (string key in keys)
@@ -110,7 +134,7 @@ namespace Colors.Android
 						new CodePropertyReferenceExpression(new CodeVariableReferenceExpression(ColorConstants.ENUM_NAME), key)
 					),
 					new CodeMethodReturnStatement(
-						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key), getTheme))
+						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(wrappedMethodReference, new CodePropertyReferenceExpression(androidColorId, key)))
 					)
 				);
 
@@ -134,6 +158,7 @@ namespace Colors.Android
 			codeNamespace.Imports.Add(new CodeNamespaceImport(DefaultNamespace));
 			codeNamespace.Imports.Add(new CodeNamespaceImport("Android.Content"));
 			codeNamespace.Imports.Add(new CodeNamespaceImport("Android.Graphics"));
+			codeNamespace.Imports.Add(new CodeNamespaceImport("Android.OS"));
 
 			// create class
 			var classDeclaration = new CodeTypeDeclaration(ColorConstants.COLORS_NAME)
@@ -167,11 +192,37 @@ namespace Colors.Android
 			};
 			classDeclaration.Members.Add(constructor);
 
+			//wrapped method
+			var wrappedMethod = new CodeMemberMethod
+			{
+				Name = "GetWrappedColor",
+				ReturnType = new CodeTypeReference("Color"),
+				Attributes = MemberAttributes.Private | MemberAttributes.Static
+			};
+
+			wrappedMethod.Parameters.Add(new CodeParameterDeclarationExpression(typeof(int), "colorId"));
+			classDeclaration.Members.Add(wrappedMethod);
+
 			var contextReference = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), ColorConstants.CONTEXT_FIELD_NAME);
-			var resourcesProperty = new CodePropertyReferenceExpression(contextReference, "Resources");
-			var getColorMethod = new CodeMethodReferenceExpression(resourcesProperty, "GetColor");
+			var resourcesReference = new CodeFieldReferenceExpression(contextReference, "Resources");
+			var themeRef = new CodePropertyReferenceExpression(contextReference, "Theme");
+			var getColorApi23 = new CodeMethodReferenceExpression(resourcesReference, "GetColor");
+			var getColor = new CodeMethodReferenceExpression(resourcesReference, "GetColor");
+			var paramRef = new CodeVariableReferenceExpression("colorId");
+			var trueReturn = new CodeMethodReturnStatement(new CodeMethodInvokeExpression(getColorApi23, paramRef, themeRef));
+			var falseReturn = new CodeMethodReturnStatement(new CodeMethodInvokeExpression(getColor, paramRef));
+			var buildRef = new CodeTypeReferenceExpression("Build");
+			var versionRef = new CodePropertyReferenceExpression(buildRef, "VERSION");
+			var sdkIntRef = new CodePropertyReferenceExpression(versionRef, "SdkInt");
+			var buildVersionRef = new CodeTypeReferenceExpression("BuildVersionCodes");
+			var mRef = new CodePropertyReferenceExpression(buildVersionRef, "M");
+			var comparison = new CodeBinaryOperatorExpression(sdkIntRef, CodeBinaryOperatorType.GreaterThanOrEqual, mRef);
+			var conditionnalReturn = new CodeConditionStatement(comparison, new[] { trueReturn }, new[] { falseReturn });
+			wrappedMethod.Statements.Add(conditionnalReturn);
+
+			var wrappedMethodReference = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), "GetWrappedColor");
+
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
-			var getTheme = new CodePropertyReferenceExpression(contextReference, "Theme");
 
 			//properties
 			foreach (string key in keys)
@@ -183,7 +234,7 @@ namespace Colors.Android
 					Attributes = MemberAttributes.Public | MemberAttributes.Static
 				};
 
-				property.GetStatements.Add(new CodeMethodReturnStatement(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColorMethod, new CodePropertyReferenceExpression(androidColorId, key), getTheme))));
+				property.GetStatements.Add(new CodeMethodReturnStatement(new CodeMethodInvokeExpression(wrappedMethodReference, new CodePropertyReferenceExpression(androidColorId, key))));
 
 				classDeclaration.Members.Add(property);
 			}
