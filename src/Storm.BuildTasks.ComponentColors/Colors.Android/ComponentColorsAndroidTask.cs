@@ -40,7 +40,7 @@ namespace Colors.Android
 
 		protected override void GenerateForProject(List<string> keys)
 		{
-//			GenerateColorService(keys);
+			GenerateColorService(keys);
 			GenerateColors(keys);
 
 			base.GenerateForProject(keys);
@@ -95,8 +95,9 @@ namespace Colors.Android
 
 			var methodParam = new CodeVariableReferenceExpression("key");
 			var contextReference = new CodeFieldReferenceExpression(new CodeThisReferenceExpression(), ColorConstants.CONTEXT_FIELD_NAME);
-			var getColor = new CodeMethodReferenceExpression(contextReference, "GetColor");
-			var getTheme=new CodePropertyReferenceExpression(contextReference,"Theme");
+			var resourcesProperty = new CodePropertyReferenceExpression(contextReference, "Resources");
+			var getColor = new CodeMethodReferenceExpression(resourcesProperty, "GetColor");
+			var getTheme = new CodePropertyReferenceExpression(contextReference, "Theme");
 
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
 
@@ -109,7 +110,7 @@ namespace Colors.Android
 						new CodePropertyReferenceExpression(new CodeVariableReferenceExpression(ColorConstants.ENUM_NAME), key)
 					),
 					new CodeMethodReturnStatement(
-						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key), getTheme)), "ToArgb"))
+						new CodeCastExpression(typeof(uint), new CodeMethodInvokeExpression(getColor, new CodePropertyReferenceExpression(androidColorId, key), getTheme))
 					)
 				);
 
@@ -170,8 +171,7 @@ namespace Colors.Android
 			var resourcesProperty = new CodePropertyReferenceExpression(contextReference, "Resources");
 			var getColorMethod = new CodeMethodReferenceExpression(resourcesProperty, "GetColor");
 			var androidColorId = new CodeTypeReferenceExpression("Resource.Color");
-
-			//todo see if int return by context return a uint value
+			var getTheme = new CodePropertyReferenceExpression(contextReference, "Theme");
 
 			//properties
 			foreach (string key in keys)
@@ -183,7 +183,8 @@ namespace Colors.Android
 					Attributes = MemberAttributes.Public | MemberAttributes.Static
 				};
 
-				property.GetStatements.Add(new CodeMethodReturnStatement(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColorMethod, new CodePropertyReferenceExpression(androidColorId, key)))));
+				property.GetStatements.Add(new CodeMethodReturnStatement(new CodeObjectCreateExpression("Color", new CodeMethodInvokeExpression(getColorMethod, new CodePropertyReferenceExpression(androidColorId, key), getTheme))));
+
 				classDeclaration.Members.Add(property);
 			}
 

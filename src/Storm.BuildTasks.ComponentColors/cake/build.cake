@@ -14,7 +14,7 @@ const string ANDROID_TFM = "monoandroid";
 const string IOS_TFM = "monotouch;xamarinios";
 
 const string NUGET_NAME = "Storm.BuildTasks.ComponentColors";
-const string NUGET_VERSION = "1.0.14";
+const string NUGET_VERSION = "1.0.15";
 const string NUGET_AUTHOR = "Valentin Jubert, Julien Mialon";
 
 /* constants for target names */
