@@ -25,16 +25,16 @@ namespace Colors.iOS
 
 		protected virtual void GenerateColorService(Dictionary<string, string> keyValues)
 		{
-			var codeUnit = new CodeCompileUnit();
+			CodeCompileUnit codeUnit = new();
 
 			//add namespace
-			var codeNamespace = new CodeNamespace(GenerationNamespace);
+			CodeNamespace codeNamespace = new(GenerationNamespace);
 			codeUnit.Namespaces.Add(codeNamespace);
 
 			codeNamespace.Imports.Add(new CodeNamespaceImport("System"));
 
 			//create class
-			var classDeclaration = new CodeTypeDeclaration(ColorConstants.IMPLEMENTATION_SERVICE_NAME)
+			CodeTypeDeclaration classDeclaration = new(ColorConstants.IMPLEMENTATION_SERVICE_NAME)
 			{
 				IsClass = true,
 				TypeAttributes = TypeAttributes.Public
@@ -43,7 +43,7 @@ namespace Colors.iOS
 			codeNamespace.Types.Add(classDeclaration);
 
 			//methode
-			var method = new CodeMemberMethod()
+			CodeMemberMethod method = new()
 			{
 				Name = ColorConstants.SERVICE_METHOD_NAME,
 				ReturnType = new CodeTypeReference(typeof(uint)),
@@ -52,11 +52,11 @@ namespace Colors.iOS
 			method.Parameters.Add(new CodeParameterDeclarationExpression(ColorConstants.ENUM_NAME, "key"));
 			classDeclaration.Members.Add(method);
 
-			var methodParam = new CodeVariableReferenceExpression("key");
+			CodeVariableReferenceExpression methodParam = new("key");
 
-			foreach (var pair in keyValues)
+			foreach (KeyValuePair<string, string> pair in keyValues)
 			{
-				var condition = new CodeConditionStatement(
+				CodeConditionStatement condition = new(
 					new CodeBinaryOperatorExpression(
 						methodParam,
 						CodeBinaryOperatorType.IdentityEquality,
@@ -79,7 +79,7 @@ namespace Colors.iOS
 				value = value.Insert(1, "FF");
 			}
 
-			if (uint.TryParse(value.Replace("#", string.Empty), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out var color))
+			if (uint.TryParse(value.Replace("#", string.Empty), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out uint color))
 			{
 				return color;
 			}
@@ -93,15 +93,15 @@ namespace Colors.iOS
 		protected virtual void GenerateColors(List<string> keys)
 		{
 			//TODO MAKE RETURN UICOLOR
-			var codeUnit = new CodeCompileUnit();
+			CodeCompileUnit codeUnit = new();
 			// for class declaration
-			var codeNamespace = new CodeNamespace(GenerationNamespace);
+			CodeNamespace codeNamespace = new(GenerationNamespace);
 			codeUnit.Namespaces.Add(codeNamespace);
 
 			codeNamespace.Imports.Add(new CodeNamespaceImport("System"));
 
 			// create class
-			var classDeclaration = new CodeTypeDeclaration(ColorConstants.COLORS_NAME)
+			CodeTypeDeclaration classDeclaration = new(ColorConstants.COLORS_NAME)
 			{
 				IsClass = true,
 				TypeAttributes = TypeAttributes.NestedAssembly | TypeAttributes.Sealed,
@@ -109,7 +109,7 @@ namespace Colors.iOS
 			codeNamespace.Types.Add(classDeclaration);
 
 			//private constructor
-			var constructor = new CodeConstructor
+			CodeConstructor constructor = new()
 			{
 				Attributes = MemberAttributes.Private
 			};
@@ -117,14 +117,14 @@ namespace Colors.iOS
 
 			//field
 			const string fieldName = "_service";
-			var field = new CodeMemberField($"Func<{ColorConstants.INTERFACE_SERVICE_NAME}>", fieldName)
+			CodeMemberField field = new($"Func<{ColorConstants.INTERFACE_SERVICE_NAME}>", fieldName)
 			{
 				Attributes = MemberAttributes.Private | MemberAttributes.Static
 			};
 			classDeclaration.Members.Add(field);
 
 			//initialize method
-			var initializeMethod = new CodeMemberMethod
+			CodeMemberMethod initializeMethod = new()
 			{
 				Name = "Initialize",
 				Attributes = MemberAttributes.Public | MemberAttributes.Static
@@ -133,11 +133,11 @@ namespace Colors.iOS
 			initializeMethod.Statements.Add(new CodeAssignStatement(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), fieldName), new CodeVariableReferenceExpression("service")));
 			classDeclaration.Members.Add(initializeMethod);
 
-			var serviceReference = new CodeMethodInvokeExpression(new CodeMethodReferenceExpression(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), fieldName), "Invoke"));
-			var getColorMethod = new CodeMethodReferenceExpression(serviceReference, ColorConstants.SERVICE_METHOD_NAME);
-			foreach (var key in keys)
+			CodeMethodInvokeExpression serviceReference = new(new CodeMethodReferenceExpression(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(ColorConstants.COLORS_NAME), fieldName), "Invoke"));
+			CodeMethodReferenceExpression getColorMethod = new(serviceReference, ColorConstants.SERVICE_METHOD_NAME);
+			foreach (string key in keys)
 			{
-				var property = new CodeMemberProperty
+				CodeMemberProperty property = new()
 				{
 					Name = key,
 					Type = new CodeTypeReference(typeof(uint)),

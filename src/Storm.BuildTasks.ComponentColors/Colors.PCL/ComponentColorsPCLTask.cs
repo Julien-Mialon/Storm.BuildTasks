@@ -19,14 +19,14 @@ namespace Colors.PCL
 
 		protected virtual void GenerateEnumColors(List<string> keys)
 		{
-			var codeUnit = new CodeCompileUnit();
+			CodeCompileUnit codeUnit = new();
 
 			//ajout namespace
-			var codeNamespace = new CodeNamespace(GenerationNamespace);
+			CodeNamespace codeNamespace = new(GenerationNamespace);
 			codeUnit.Namespaces.Add(codeNamespace);
 
 			//creation enum
-			var enumDeclaration = new CodeTypeDeclaration(ColorConstants.ENUM_NAME)
+			CodeTypeDeclaration enumDeclaration = new(ColorConstants.ENUM_NAME)
 			{
 				IsEnum = true,
 				TypeAttributes = TypeAttributes.Public
@@ -42,14 +42,14 @@ namespace Colors.PCL
 
 		protected virtual void GenerateIColorService()
 		{
-			var codeUnit = new CodeCompileUnit();
+			CodeCompileUnit codeUnit = new();
 
 			//ajout namespace
-			var codeNamespace = new CodeNamespace(GenerationNamespace);
+			CodeNamespace codeNamespace = new(GenerationNamespace);
 			codeUnit.Namespaces.Add(codeNamespace);
 
 			//create interface
-			var interfaceDeclaration = new CodeTypeDeclaration(ColorConstants.INTERFACE_SERVICE_NAME)
+			CodeTypeDeclaration interfaceDeclaration = new(ColorConstants.INTERFACE_SERVICE_NAME)
 			{
 				IsInterface = true,
 				TypeAttributes = TypeAttributes.Interface | TypeAttributes.Public
@@ -57,7 +57,7 @@ namespace Colors.PCL
 			codeNamespace.Types.Add(interfaceDeclaration);
 
 			//ajout methode
-			var method = new CodeMemberMethod
+			CodeMemberMethod method = new()
 			{
 				Name = ColorConstants.SERVICE_METHOD_NAME,
 				ReturnType = new CodeTypeReference(typeof(uint))

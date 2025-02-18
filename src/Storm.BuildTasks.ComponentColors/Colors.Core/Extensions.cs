@@ -3,7 +3,6 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -22,19 +21,20 @@ namespace Colors.Core
 		public static string WriteToString(this XmlDocument document)
 		{
 			string result;
-			using (MemoryStream outputStream = new MemoryStream())
+			using (MemoryStream outputStream = new())
 			{
 				using (XmlWriter writer = XmlWriter.Create(outputStream, new XmlWriterSettings
-				{
-					OmitXmlDeclaration = false,
-					ConformanceLevel = ConformanceLevel.Document,
-					Encoding = Encoding.UTF8,
-					Indent = true,
-					IndentChars = "\t"
-				}))
+				       {
+					       OmitXmlDeclaration = false,
+					       ConformanceLevel = ConformanceLevel.Document,
+					       Encoding = Encoding.UTF8,
+					       Indent = true,
+					       IndentChars = "\t"
+				       }))
 				{
 					document.Save(writer);
 				}
+
 				result = Encoding.UTF8.GetString(outputStream.ToArray());
 			}
 
@@ -43,6 +43,7 @@ namespace Colors.Core
 			{
 				result = result.Remove(0, bomMarkUtf8.Length);
 			}
+
 			return result.Replace("\0", "");
 		}
 
@@ -66,13 +67,14 @@ namespace Colors.Core
 					return item.GetMetadata(metadataKey);
 				}
 			}
+
 			return defaultValue;
 		}
 
 		public static void WriteToFile(this CodeCompileUnit code, string file, string comment)
 		{
 			CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
-			CodeGeneratorOptions options = new CodeGeneratorOptions
+			CodeGeneratorOptions options = new()
 			{
 				BlankLinesBetweenMembers = false,
 				BracingStyle = "C",
@@ -80,13 +82,13 @@ namespace Colors.Core
 			};
 
 			string contentString;
-			using (StringWriter stringWriter = new StringWriter())
+			using (StringWriter stringWriter = new())
 			{
 				provider.GenerateCodeFromCompileUnit(code, stringWriter, options);
 
 				string content = stringWriter.GetStringBuilder().ToString();
 
-				Regex commentRegex = new Regex("<auto-?generated>.*</auto-?generated>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
+				Regex commentRegex = new("<auto-?generated>.*</auto-?generated>", RegexOptions.IgnoreCase | RegexOptions.Singleline);
 				contentString = commentRegex.Replace(content, comment);
 			}
 

@@ -9,12 +9,12 @@ const string DEPLOYMENT_DIRECTORY = "../build";
 const string DEPLOYMENT_TOOLS_DIRECTORY = DEPLOYMENT_DIRECTORY + "/colors";
 const string DEPLOYMENT_BUILD_DIRECTORY = DEPLOYMENT_DIRECTORY + "/build";
 
-const string PCL_TFM = "netstandard1.0";
-const string ANDROID_TFM = "monoandroid";
-const string IOS_TFM = "monotouch;xamarinios";
+const string PCL_TFM = "netstandard2.0";
+const string ANDROID_TFM = "monoandroid;net8.0-android";
+const string IOS_TFM = "monotouch;xamarinios;net8.0-ios";
 
 const string NUGET_NAME = "Storm.BuildTasks.ComponentColors";
-const string NUGET_VERSION = "1.0.16";
+const string NUGET_VERSION = "2.0.0-beta1";
 const string NUGET_AUTHOR = "Valentin Jubert, Julien Mialon";
 
 /* constants for target names */

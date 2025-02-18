@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Runtime.Remoting.Messaging;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -29,9 +27,9 @@ namespace Colors.Core
 
 		private const string LINK_METADATA_NAME = "Link";
 
-		protected readonly List<string> OutputCompileFilePath = new List<string>();
+		protected readonly List<string> OutputCompileFilePath = new();
 
-		protected readonly List<string> OutputResourceFilePath = new List<string>();
+		protected readonly List<string> OutputResourceFilePath = new();
 
 		protected string GenerationNamespace
 		{
@@ -95,7 +93,7 @@ namespace Colors.Core
 
 		private Dictionary<string, List<ColorFile>> ReadInputFiles(ITaskItem[] inputs)
 		{
-			Dictionary<string, List<ColorFile>> result = new Dictionary<string, List<ColorFile>>();
+			Dictionary<string, List<ColorFile>> result = new();
 			if (inputs == null)
 			{
 				return result;
@@ -110,11 +108,11 @@ namespace Colors.Core
 
 				if (!result.ContainsKey(directory))
 				{
-					result.Add(directory, new List<ColorFile>());
+					result.Add(directory, new());
 				}
 
 				Log.LogMessage(MessageImportance.High, $"\t- {projectFilePath}");
-				result[directory].Add(new ColorFile
+				result[directory].Add(new()
 				{
 					AbsoluteFilePath = absoluteFilePath,
 					ProjectFilePath = projectFilePath,
@@ -134,16 +132,16 @@ namespace Colors.Core
 
 		protected virtual void Generate(Dictionary<string, List<ColorFile>> files, Dictionary<string, List<ColorFile>> overrideFiles)
 		{
-			HashSet<string> keySet = new HashSet<string>();
+			HashSet<string> keySet = new();
 
 			foreach (KeyValuePair<string, List<ColorFile>> item in files)
 			{
 				if (!overrideFiles.TryGetValue(item.Key, out List<ColorFile> overrideFile))
 				{
-					overrideFile = new List<ColorFile>();
+					overrideFile = new();
 				}
 
-				var colors = GenerateColors(item.Key, item.Value, overrideFile, keySet);
+				Dictionary<string, string> colors = GenerateColors(item.Key, item.Value, overrideFile, keySet);
 				GenerateForDirectory(item.Key, colors);
 			}
 
@@ -153,17 +151,17 @@ namespace Colors.Core
 
 		protected virtual Dictionary<string, string> GenerateColors(string directory, List<ColorFile> inputFiles, List<ColorFile> overrideFiles, HashSet<string> keys)
 		{
-			var privateContent = new Dictionary<string, string>();
-			var referenceContent = new Dictionary<string, string>();
+			Dictionary<string, string> privateContent = new();
+			Dictionary<string, string> referenceContent = new();
 
-			var content = new Dictionary<string, string>();
+			Dictionary<string, string> content = new();
 
-			foreach (var file in inputFiles)
+			foreach (ColorFile file in inputFiles)
 			{
-				foreach (var keyValue in file.Content)
+				foreach (KeyValuePair<string, string> keyValue in file.Content)
 				{
-					var key = keyValue.Key;
-					var colorString = keyValue.Value;
+					string key = keyValue.Key;
+					string colorString = keyValue.Value;
 					if (colorString.StartsWith("#"))
 					{
 						if (!privateContent.TryAdd(key, colorString))
@@ -181,13 +179,13 @@ namespace Colors.Core
 				}
 			}
 
-			foreach (var file in overrideFiles)
+			foreach (ColorFile file in overrideFiles)
 			{
 
-				foreach (var keyValue in file.Content)
+				foreach (KeyValuePair<string, string> keyValue in file.Content)
 				{
-					var key = keyValue.Key;
-					var colorString = keyValue.Value;
+					string key = keyValue.Key;
+					string colorString = keyValue.Value;
 					if (colorString.StartsWith("#"))
 					{
 						if (privateContent.ContainsKey(key))
@@ -213,9 +211,9 @@ namespace Colors.Core
 				}
 			}
 
-			foreach (var reference in referenceContent)
+			foreach (KeyValuePair<string, string> reference in referenceContent)
 			{
-				if (privateContent.TryGetValue(reference.Value, out var color))
+				if (privateContent.TryGetValue(reference.Value, out string color))
 				{
 					content.Add(reference.Key, color);
 					keys.Add(reference.Key);
