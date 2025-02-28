@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <UsingTask AssemblyFile="..\..\colors\Colors.iOS.dll"
+    <UsingTask AssemblyFile="..\..\lib\net8.0-ios18.0\Colors.iOS.dll"
                TaskName="Colors.iOS.ComponentColorsIOSTask"/>
 
     <Target Name="ComponentColorsTask" BeforeTargets="PrepareForBuild">

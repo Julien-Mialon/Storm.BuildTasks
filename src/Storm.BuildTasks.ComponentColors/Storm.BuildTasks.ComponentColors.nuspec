@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>Storm.BuildTasks.ComponentColors</id>
+		<version>2.0.0-beta9</version>
+		<title>Storm.BuildTasks.ComponentColors</title>
+		<authors>Valentin Jubert, Julien Mialon</authors>
+		<owners>Valentin Jubert, Julien Mialon</owners>
+		<licenseUrl>https://github.com/Julien-Mialon/Storm.BuildTasks/blob/master/LICENSE</licenseUrl>
+		<repository url="https://github.com/Julien-Mialon/Storm.BuildTasks.git" type="git" />
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Pre compilation task to help colors management</description>
+		<releaseNotes>migrate to netstandard</releaseNotes>
+		<copyright>Copyright 2016</copyright>
+		<tags>colors android ios pcl xamarin</tags>
+		<dependencies>
+			<group targetFramework="netstandard2.0" />
+			<group targetFramework="net8.0-android34.0" />
+			<group targetFramework="net8.0-ios18.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file
+			src="Colors.PCL\bin\Release\netstandard2.0\*.dll;Colors.PCL\bin\Release\netstandard2.0\*.pdb"
+			target="lib\netstandard2.0" />
+		<file
+			src="Colors.PCL\*.props;Colors.PCL\*.targets"
+			target="build\netstandard2.0" />
+		<file
+			src="Colors.Android\bin\Release\netstandard2.0\*.dll;Colors.Android\bin\Release\netstandard2.0\*.pdb"
+			target="lib\net8.0-android34.0" />
+		<file
+			src="Colors.Android\*.props;Colors.Android\*.targets"
+			target="build\net8.0-android34.0" />
+		<file
+			src="Colors.iOS\bin\Release\netstandard2.0\*.dll;Colors.iOS\bin\Release\netstandard2.0\*.pdb"
+			target="lib\net8.0-ios18.0" />
+		<file
+			src="Colors.iOS\*.props;Colors.iOS\*.targets"
+			target="build\net8.0-ios18.0" />
+	</files>
+</package>
